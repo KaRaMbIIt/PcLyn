@@ -1,13 +1,159 @@
-<!doctype html>
-<html lang="en">
-  <head>
+<!DOCTYPE html>
+<html lang="es">
+<head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pclyn-web</title>
-  </head>
-  <body>
-    <div id="app"></div>
+    <title>PCLyN | Servicios Tecnológicos</title>
+    <meta name="description" content="Soluciones informáticas, asesoría y soporte técnico en Santiago, Chile." />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <script type="module" src="/src/main.js"></script>
-  </body>
+</head>
+<body class="font-sans text-slate-800 bg-white scroll-smooth">
+
+    <!-- NAVBAR -->
+    <header id="navbar" class="fixed top-0 left-0 w-full z-50 bg-white/90 backdrop-blur-sm shadow-sm transition-all">
+        <nav class="max-w-6xl mx-auto flex items-center justify-between px-6 py-4">
+            <a href="#inicio" class="text-xl font-bold text-primary-700">PCLyN</a>
+            <ul class="hidden md:flex gap-8 text-sm font-medium">
+                <li><a href="#inicio" class="nav-link hover:text-primary-600 transition-colors">Inicio</a></li>
+                <li><a href="#nosotros" class="nav-link hover:text-primary-600 transition-colors">Nosotros</a></li>
+                <li><a href="#servicios" class="nav-link hover:text-primary-600 transition-colors">Qué ofrecemos</a></li>
+                <li><a href="#contacto" class="nav-link hover:text-primary-600 transition-colors">Contacto</a></li>
+            </ul>
+            <a href="#contacto" class="hidden md:inline-block bg-primary-600 text-white text-sm font-semibold px-5 py-2 rounded-full hover:bg-primary-700 transition-colors">
+                Contáctanos
+            </a>
+            <!-- Botón menú móvil -->
+            <button id="menu-btn" class="md:hidden text-2xl" aria-label="Abrir menú">☰</button>
+        </nav>
+        <!-- Menú móvil desplegable -->
+        <div id="mobile-menu" class="hidden md:hidden flex-col bg-white shadow-md px-6 py-4 gap-4">
+            <a href="#inicio" class="nav-link">Inicio</a>
+            <a href="#nosotros" class="nav-link">Nosotros</a>
+            <a href="#servicios" class="nav-link">Qué ofrecemos</a>
+            <a href="#contacto" class="nav-link">Contacto</a>
+        </div>
+    </header>
+
+    <!-- HERO / INICIO -->
+    <section id="inicio" class="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-dark via-primary-900 to-primary-700 text-white text-center px-6">
+        <div data-aos="fade-up" class="max-w-2xl">
+            <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-6">
+                Somos PCLyN <br class="hidden md:block" />
+                <span class="text-primary-300">Servicios Tecnológicos</span>
+            </h1>
+            <p class="text-lg text-slate-200 mb-8">
+                Soluciones a tus problemas de informática, con asesoría y apoyo técnico
+                que crea lazos de confianza contigo.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#contacto" class="bg-primary-500 hover:bg-primary-400 transition-colors font-semibold px-8 py-3 rounded-full">
+                    Consúltanos
+                </a>
+                <a href="https://instagram.com/pc_lyn" target="_blank" rel="noopener" class="border border-white/40 hover:bg-white/10 transition-colors font-semibold px-8 py-3 rounded-full">
+                    @pc_lyn en Instagram
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- NOSOTROS -->
+    <section id="nosotros" class="py-24 px-6 bg-slate-50">
+        <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+            <div data-aos="fade-right">
+                <span class="text-primary-600 font-semibold text-sm uppercase tracking-wide">Nosotros</span>
+                <h2 class="text-3xl md:text-4xl font-bold mt-2 mb-6">Un equipo con experiencia y cercanía</h2>
+                <p class="text-slate-600 leading-relaxed">
+                    Enfocados en resolver tus problemas informáticos, nace PCLyN: un equipo
+                    de trabajo que combina 35 años de experiencia en el área de la informática
+                    junto al entusiasmo e innovación de una nueva generación.
+                </p>
+            </div>
+            <div data-aos="fade-left" class="rounded-2xl overflow-hidden shadow-xl">
+                <img src="/img/equipo.jpeg" alt="Equipo PCLyN" class="w-full h-full object-cover" />
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICIOS -->
+    <section id="servicios" class="py-24 px-6">
+        <div class="max-w-6xl mx-auto text-center mb-16" data-aos="fade-up">
+            <span class="text-primary-600 font-semibold text-sm uppercase tracking-wide">Qué ofrecemos</span>
+            <h2 class="text-3xl md:text-4xl font-bold mt-2">Nuestros servicios</h2>
+        </div>
+
+        <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-8">
+            <div data-aos="fade-up" class="bg-white border border-slate-100 shadow-sm hover:shadow-lg transition-shadow rounded-2xl p-8">
+                <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-primary-100 text-primary-700 mb-5 text-xl">🌐</div>
+                <h3 class="text-lg font-bold mb-3">Redes</h3>
+                <ul class="text-slate-600 text-sm space-y-2 list-disc list-inside">
+                    <li>Instalación de redes de área local</li>
+                    <li>Mantención de redes</li>
+                    <li>Configuración</li>
+                </ul>
+            </div>
+
+            <div data-aos="fade-up" data-aos-delay="100" class="bg-white border border-slate-100 shadow-sm hover:shadow-lg transition-shadow rounded-2xl p-8">
+                <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-primary-100 text-primary-700 mb-5 text-xl">🖥️</div>
+                <h3 class="text-lg font-bold mb-3">Mantención de equipos</h3>
+                <ul class="text-slate-600 text-sm space-y-2 list-disc list-inside">
+                    <li>Instalación de sistema operativo</li>
+                    <li>Reparación de equipos</li>
+                    <li>Mantención preventiva</li>
+                </ul>
+            </div>
+
+            <div data-aos="fade-up" data-aos-delay="200" class="bg-white border border-slate-100 shadow-sm hover:shadow-lg transition-shadow rounded-2xl p-8">
+                <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-primary-100 text-primary-700 mb-5 text-xl">🔧</div>
+                <h3 class="text-lg font-bold mb-3">Soporte remoto</h3>
+                <p class="text-slate-600 text-sm mb-4">
+                    Accedemos a tu equipo de forma rápida y segura usando AnyDesk o TeamViewer.
+                </p>
+                <div class="flex gap-3">
+                    <a href="https://download.anydesk.com/AnyDesk.exe" class="text-primary-600 text-sm font-semibold hover:underline">AnyDesk</a>
+                    <a href="https://download.teamviewer.com/download/TeamViewer_Setup.exe" class="text-primary-600 text-sm font-semibold hover:underline">TeamViewer</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACTO -->
+    <section id="contacto" class="py-24 px-6 bg-dark text-white">
+        <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-12">
+            <div data-aos="fade-right">
+                <span class="text-primary-400 font-semibold text-sm uppercase tracking-wide">Contacto</span>
+                <h2 class="text-3xl md:text-4xl font-bold mt-2 mb-6">Conversemos</h2>
+                <p class="text-slate-300 mb-8">
+                    Si necesitas nuestra ayuda, estamos disponibles.
+                </p>
+                <ul class="space-y-3 text-slate-300 text-sm">
+                    <li>📍 Av. Violeta Cousiño norte 7648, Peñalolén, Santiago, Chile</li>
+                    <li>📞 +569 9890 4183</li>
+                    <li>🕒 Lun - Vie, 9:30 - 18:30</li>
+                    <li>✉️ mario.schiaffino@pclyn.cl</li>
+                    <li>📷 <a href="https://instagram.com/pc_lyn" class="hover:text-primary-400">@pc_lyn</a></li>
+                </ul>
+            </div>
+
+            <form data-aos="fade-left" class="bg-white/5 border border-white/10 rounded-2xl p-8 space-y-4" id="contact-form">
+                <input type="text" placeholder="Tu nombre" required
+                    class="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary-500" />
+                <input type="email" placeholder="Tu correo" required
+                    class="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary-500" />
+                <textarea placeholder="Cuéntanos qué necesitas" rows="4" required
+                    class="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary-500"></textarea>
+                <button type="submit"
+                    class="w-full bg-primary-500 hover:bg-primary-400 transition-colors font-semibold py-3 rounded-lg">
+                    Enviar mensaje
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-black text-slate-400 text-sm py-8 px-6 text-center">
+        <p>© 2026 PCLyN · Todos los derechos reservados</p>
+    </footer>
+
+</body>
 </html>
