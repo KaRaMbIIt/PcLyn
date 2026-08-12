@@ -13,6 +13,7 @@
     "vite": "^8.2.0"
   },
   "dependencies": {
-    "@tailwindcss/vite": "^4.3.3"
+    "@tailwindcss/vite": "^4.3.3",
+    "aos": "^2.3.4"
   }
 }
