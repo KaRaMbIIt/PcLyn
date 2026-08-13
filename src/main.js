@@ -3,7 +3,8 @@ import './style.css';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
-AOS.init({ duration: 700, once: true, offset: 80 }); 
+AOS.init({ duration: 700, once: true, offset: 80 });
+
 // --- Menú móvil ---
 const menuBtn = document.getElementById('menu-btn');
 const mobileMenu = document.getElementById('mobile-menu');
@@ -66,6 +67,8 @@ const observer = new IntersectionObserver(
   }
 );
 
+sections.forEach((section) => observer.observe(section));
+
 // --- Tarjetas de servicio expandibles ---
 const serviceCards = document.querySelectorAll('.service-card');
 const supportsHover = window.matchMedia('(hover: hover)').matches;
@@ -84,7 +87,6 @@ function collapseCard(card) {
 }
 
 serviceCards.forEach((card) => {
-  // Hover: solo en dispositivos que realmente tienen cursor (no celulares)
   if (supportsHover) {
     card.addEventListener('mouseenter', () => {
       if (pinnedCard !== card) expandCard(card);
@@ -94,7 +96,6 @@ serviceCards.forEach((card) => {
     });
   }
 
-  // Click: fija la tarjeta abierta (funciona igual en desktop y celular)
   card.addEventListener('click', (e) => {
     e.stopPropagation();
     if (pinnedCard === card) {
@@ -107,7 +108,6 @@ serviceCards.forEach((card) => {
     }
   });
 
-  // Accesibilidad: Enter o Espacio activan la tarjeta igual que un click
   card.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
@@ -116,21 +116,19 @@ serviceCards.forEach((card) => {
   });
 });
 
-// Click afuera de cualquier tarjeta: cierra la que estaba fijada
 document.addEventListener('click', (e) => {
   if (pinnedCard && !pinnedCard.contains(e.target)) {
     collapseCard(pinnedCard);
     pinnedCard = null;
   }
 });
- // --- Copiar correo al portapapeles ---
+
 // --- Copiar correo al portapapeles ---
 const copyBtn = document.getElementById('copy-email-btn');
 const copyFeedback = document.getElementById('copy-feedback');
 const emailToCopy = 'mario.schiaffino@pclyn.cl';
 
 async function copyEmail() {
-  // Método moderno (requiere HTTPS o localhost)
   if (navigator.clipboard && window.isSecureContext) {
     try {
       await navigator.clipboard.writeText(emailToCopy);
@@ -141,7 +139,6 @@ async function copyEmail() {
     }
   }
 
-  // Fallback para HTTP sin cifrar o navegadores viejos
   const tempInput = document.createElement('textarea');
   tempInput.value = emailToCopy;
   tempInput.style.position = 'fixed';
@@ -163,7 +160,8 @@ function showCopyFeedback() {
   setTimeout(() => copyFeedback.classList.add('hidden'), 2000);
 }
 
-// --- Blobs rebotando estilo "logo DVD" en el Hero ---
+copyBtn.addEventListener('click', copyEmail);
+
 // --- Blobs rebotando en toda la página, estilo "logo DVD" ---
 function initBgBlobs() {
   const container = document.getElementById('bg-blobs');
@@ -177,17 +175,16 @@ function initBgBlobs() {
     size: el.offsetWidth,
     x: Math.random() * (window.innerWidth - el.offsetWidth),
     y: Math.random() * (window.innerHeight - el.offsetHeight),
-    vx: (1.4 + Math.random() * 0.8) * (i % 2 === 0 ? 1 : -1),
-    vy: (1.4 + Math.random() * 0.8) * (i % 2 === 0 ? -1 : 1),
+    vx: (0.002 + Math.random() * 0.8) * (i % 2 === 0 ? 1 : -1),
+    vy: (0.002 + Math.random() * 0.8) * (i % 2 === 0 ? -1 : 1),
   }));
 
-  // Posición inicial siempre visible, se mueva o no
   state.forEach((b) => {
     b.el.style.left = b.x + 'px';
     b.el.style.top = b.y + 'px';
   });
 
-  if (reduceMotion) return; // respeta accesibilidad, pero ya quedaron visibles y bien ubicadas
+  if (reduceMotion) return;
 
   function tick() {
     const width = window.innerWidth;
@@ -211,7 +208,6 @@ function initBgBlobs() {
 
   requestAnimationFrame(tick);
 
-  // Si cambian el tamaño de ventana (o rotan el celular), ajusta los límites al instante
   window.addEventListener('resize', () => {
     state.forEach((b) => {
       b.x = Math.min(b.x, window.innerWidth - b.size);
