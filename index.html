@@ -17,13 +17,74 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script type="module" src="/src/main.js"></script>
 </head>
+
+<!-- SOLICITAR SERVICIO -->
+<button id="quote-tab" type="button" class="fixed right-0 top-1/2 -translate-y-1/2 z-40 bg-accent-500 hover:bg-accent-600 text-dark font-semibold text-sm px-3 py-4 rounded-l-xl shadow-lg transition-colors" style="writing-mode: vertical-rl;" aria-expanded="false" aria-controls="quote-panel">
+    Solicitar servicio
+</button>
+
+<div id="quote-overlay" class="fixed inset-0 bg-black/50 z-40 hidden"></div>
+
+<aside id="quote-panel" class="fixed top-0 right-0 h-full w-full sm:w-96 bg-white z-50 shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out overflow-y-auto" aria-hidden="true">
+    <div class="sticky top-0 bg-white z-10 flex items-center justify-between px-6 py-4 border-b border-slate-100">
+    <h3 class="font-display text-xl font-bold text-slate-800">Solicita tu servicio</h3>
+    <button id="quote-close" type="button" aria-label="Cerrar" class="text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-full w-9 h-9 flex items-center justify-center text-2xl leading-none transition-colors">&times;</button>
+</div>
+<div class="p-6">
+
+        <p class="text-slate-500 text-sm mb-6">
+            Cuéntanos qué necesitas y te contactamos a la brevedad.
+        </p>
+
+        <form id="quote-form">
+            <input type="hidden" name="access_key" value="TU_ACCESS_KEY_AQUI" />
+            <input type="hidden" name="subject" value="Nueva solicitud de servicio - PCLyN" />
+            <input type="checkbox" name="botcheck" class="hidden" style="display:none" tabindex="-1" autocomplete="off" />
+
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Nombre</label>
+                    <input type="text" name="name" required class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500" />
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Correo</label>
+                    <input type="email" name="email" required class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500" />
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Teléfono (opcional)</label>
+                    <input type="tel" name="phone" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500" />
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">¿Qué servicio necesitas?</label>
+                    <select name="servicio" required class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500">
+                        <option value="">Selecciona una opción</option>
+                        <option value="Mantención de equipos">Mantención de equipos</option>
+                        <option value="Redes">Redes (instalación / mantención)</option>
+                        <option value="Soporte remoto">Soporte remoto</option>
+                        <option value="Armado de PC">Armado de PC</option>
+                        <option value="Otro">Otro</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Cuéntanos más</label>
+                    <textarea name="detalles" rows="4" required placeholder="Describe brevemente lo que necesitas" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"></textarea>
+                </div>
+            </div>
+
+            <button type="submit" id="quote-submit" class="w-full mt-6 bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+                Enviar solicitud
+            </button>
+
+            <p id="quote-status" class="text-sm mt-3 hidden"></p>
+        </form>
+    </div>
+</aside>
+
 <body class="font-sans text-slate-800 bg-white scroll-smooth">
  
     <!-- FONDO ANIMADO FIJO (blobs rebotando por toda la página) -->
-    <div id="bg-blobs" class="fixed inset-0 -z-10 overflow-hidden bg-dark" aria-hidden="true">
-        <div class="blob absolute 	w-105 h-105 rounded-full bg-primary-500/30 blur-3xl"></div>
-        <div class="blob absolute 	w-95 h-95 rounded-full bg-secondary-600/30 blur-3xl"></div>
-        <div class="blob absolute 	w-75 h-75 rounded-full bg-accent-500/25 blur-3xl"></div>
+    <div id="bg-wires" class="absolute inset-0 -z-10 overflow-hidden bg-dark" aria-hidden="true">
+        <svg id="wires-svg" viewBox="0 0 1200 3000" preserveAspectRatio="none" style="width:100%;height:100%;display:block;"></svg>
     </div>
  
     <!-- NAVBAR -->
@@ -51,119 +112,118 @@
         </div>
     </header>
  
-    <!-- HERO / INICIO -->
-    <section id="inicio" class="relative min-h-screen flex items-center justify-center text-white text-center px-6 overflow-hidden">
-        <div data-aos="fade-up" class="relative z-10 max-w-2xl">
-            <h1 class="font-display text-4xl md:text-6xl font-extrabold leading-tight mb-6">
-                Somos PCLyN <br class="hidden md:block" />
-                <span class="text-primary-300">Servicios Tecnológicos</span>
-            </h1>
-            <p class="text-lg text-slate-200 mb-8">
-                Soluciones a tus problemas de informática, con asesoría y apoyo técnico
-                que crea lazos de confianza contigo.
-            </p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="#contacto" class="bg-accent-500 hover:bg-accent-600 transition-colors font-semibold px-8 py-3 rounded-full text-dark">
-                    Consúltanos
-                </a>
-                <a href="https://instagram.com/pc_lyn" target="_blank" rel="noopener" class="border border-white/40 hover:bg-white/10 transition-colors font-semibold px-8 py-3 rounded-full">
-                    @pc_lyn en Instagram
-                </a>
+   <!-- HERO / INICIO -->
+<section id="inicio" class="relative min-h-screen flex items-center justify-center text-white text-center px-6 overflow-hidden">
+    <div data-aos="fade-up" class="relative z-10 max-w-2xl">
+        <h1 class="font-display text-4xl md:text-6xl font-extrabold leading-tight mb-6">
+            Somos PCLyN <br class="hidden md:block" />
+            <span class="text-primary-300">Servicios Tecnológicos</span>
+        </h1>
+        <p class="text-lg text-slate-200 mb-8">
+            Soluciones a tus problemas de informática, con asesoría y apoyo técnico
+            que crea lazos de confianza contigo.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="#contacto" class="bg-accent-500 hover:bg-accent-600 transition-colors font-semibold px-8 py-3 rounded-full text-dark">
+                Consúltanos
+            </a>
+            <a href="https://instagram.com/pc_lyn" target="_blank" rel="noopener" class="border border-white/40 hover:bg-white/10 transition-colors font-semibold px-8 py-3 rounded-full">
+                @pc_lyn en Instagram
+            </a>
+        </div>
+    </div>
+</section>
+ <!-- SERVICIOS -->
+<section id="servicios" class="relative py-24 px-6 text-white">
+    <div class="max-w-6xl mx-auto text-center mb-16" data-aos="fade-up">
+        <span class="text-primary-300 font-semibold text-sm uppercase tracking-wide">Qué ofrecemos</span>
+        <h2 class="font-display text-3xl md:text-4xl font-bold mt-2">Nuestros servicios</h2>
+        <p class="text-slate-300 text-sm mt-3">Pasa el cursor sobre cada tarjeta para ver el detalle</p>
+    </div>
+
+    <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-8">
+
+        <!-- Mantención de equipos -->
+        <div data-aos="fade-up" class="service-card bg-white border border-primary-100 shadow-md hover:shadow-xl hover:border-primary-300 transition-all rounded-2xl p-8 cursor-pointer" tabindex="0" role="button" aria-expanded="false">
+            <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-primary-100 text-primary-700 mb-5">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 5h16v10H4z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M2 19h20l-1.5-4h-17z" />
+                </svg>
+            </div>
+            <h3 class="text-lg font-bold mb-1 text-slate-800">Mantención de equipos</h3>
+            <div class="service-details overflow-hidden transition-[max-height] duration-300 ease-in-out" style="max-height:0px;">
+                <ul class="text-slate-600 text-sm space-y-2 list-disc list-inside pt-3">
+                    <li>Instalación de sistema operativo</li>
+                    <li>Reparación de equipos</li>
+                    <li>Mantención preventiva</li>
+                </ul>
             </div>
         </div>
-        <div class="absolute bottom-0 left-0 w-full h-32 	bg-linear-to-b from-transparent to-white pointer-events-none"></div>
-    </section>
- 
-     
-    <!-- SERVICIOS -->
-    <section id="servicios" class="relative py-24 px-6 bg-white/95">
-        <div class="max-w-6xl mx-auto text-center mb-16" data-aos="fade-up">
-            <span class="text-primary-600 font-semibold text-sm uppercase tracking-wide">Qué ofrecemos</span>
-            <h2 class="font-display text-3xl md:text-4xl font-bold mt-2">Nuestros servicios</h2>
-            <p class="text-slate-500 text-sm mt-3">Pasa el cursor sobre cada tarjeta para ver el detalle</p>
+
+        <!-- Redes -->
+        <div data-aos="fade-up" data-aos-delay="100" class="service-card bg-white border border-primary-100 shadow-md hover:shadow-xl hover:border-primary-300 transition-all rounded-2xl p-8 cursor-pointer" tabindex="0" role="button" aria-expanded="false">
+            <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-primary-100 text-primary-700 mb-5">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.5 16.5a5 5 0 0 1 7 0M5.5 13a9 9 0 0 1 13 0M2.5 9.5a13 13 0 0 1 19 0" />
+                    <circle cx="12" cy="19.5" r="1" fill="currentColor" stroke="none" />
+                </svg>
+            </div>
+            <h3 class="text-lg font-bold mb-1 text-slate-800">Redes</h3>
+            <div class="service-details overflow-hidden transition-[max-height] duration-300 ease-in-out" style="max-height:0px;">
+                <ul class="text-slate-600 text-sm space-y-2 list-disc list-inside pt-3">
+                    <li>Instalación de redes de área local</li>
+                    <li>Mantención de redes</li>
+                    <li>Configuración</li>
+                </ul>
+            </div>
         </div>
- 
-        <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-8">
- 
-            <!-- Mantención de equipos -->
-            <div data-aos="fade-up" class="service-card bg-white border border-primary-100 shadow-md hover:shadow-xl hover:border-primary-300 transition-all rounded-2xl p-8 cursor-pointer" tabindex="0" role="button" aria-expanded="false">
-                <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-primary-100 text-primary-700 mb-5">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 5h16v10H4z" />
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M2 19h20l-1.5-4h-17z" />
-                    </svg>
-                </div>
-                <h3 class="text-lg font-bold mb-1">Mantención de equipos</h3>
-                <div class="service-details overflow-hidden transition-[max-height] duration-300 ease-in-out" style="max-height:0px;">
-                    <ul class="text-slate-600 text-sm space-y-2 list-disc list-inside pt-3">
-                        <li>Instalación de sistema operativo</li>
-                        <li>Reparación de equipos</li>
-                        <li>Mantención preventiva</li>
-                    </ul>
+
+        <!-- Soporte remoto -->
+        <div data-aos="fade-up" data-aos-delay="200" class="service-card bg-white border border-primary-100 shadow-md hover:shadow-xl hover:border-primary-300 transition-all rounded-2xl p-8 cursor-pointer" tabindex="0" role="button" aria-expanded="false">
+            <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-primary-100 text-primary-700 mb-5">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                    <rect x="3" y="4" width="18" height="12" rx="1.5" />
+                    <path stroke-linecap="round" d="M8 20h8M12 16v4" />
+                </svg>
+            </div>
+            <h3 class="text-lg font-bold mb-1 text-slate-800">Soporte remoto</h3>
+            <div class="service-details overflow-hidden transition-[max-height] duration-300 ease-in-out" style="max-height:0px;">
+                <p class="text-slate-600 text-sm pt-3 mb-3">
+                    Accedemos a tu equipo de forma rápida y segura usando AnyDesk o TeamViewer.
+                </p>
+                <div class="flex gap-3">
+                    <a href="https://download.anydesk.com/AnyDesk.exe" class="text-primary-600 text-sm font-semibold hover:underline">AnyDesk</a>
+                    <a href="https://download.teamviewer.com/download/TeamViewer_Setup.exe" class="text-primary-600 text-sm font-semibold hover:underline">TeamViewer</a>
                 </div>
             </div>
- 
-            <!-- Redes -->
-            <div data-aos="fade-up" class="service-card bg-white border border-primary-100 shadow-md hover:shadow-xl hover:border-primary-300 transition-all rounded-2xl p-8 cursor-pointer" tabindex="0" role="button" aria-expanded="false">
-                <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-primary-100 text-primary-700 mb-5">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.5 16.5a5 5 0 0 1 7 0M5.5 13a9 9 0 0 1 13 0M2.5 9.5a13 13 0 0 1 19 0" />
-                        <circle cx="12" cy="19.5" r="1" fill="currentColor" stroke="none" />
-                    </svg>
-                </div>
-                <h3 class="text-lg font-bold mb-1">Redes</h3>
-                <div class="service-details overflow-hidden transition-[max-height] duration-300 ease-in-out" style="max-height:0px;">
-                    <ul class="text-slate-600 text-sm space-y-2 list-disc list-inside pt-3">
-                        <li>Instalación de redes de área local</li>
-                        <li>Mantención de redes</li>
-                        <li>Configuración</li>
-                    </ul>
-                </div>
-            </div>
- 
-            <!-- Soporte remoto -->
-            <div data-aos="fade-up" data-aos-delay="200" class="service-card bg-white border border-primary-100 shadow-md hover:shadow-xl hover:border-primary-300 transition-all rounded-2xl p-8 cursor-pointer" tabindex="0" role="button" aria-expanded="false">
-                <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-primary-100 text-primary-700 mb-5">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
-                        <rect x="3" y="4" width="18" height="12" rx="1.5" />
-                        <path stroke-linecap="round" d="M8 20h8M12 16v4" />
-                    </svg>
-                </div>
-                <h3 class="text-lg font-bold mb-1">Soporte remoto</h3>
-                <div class="service-details overflow-hidden transition-[max-height] duration-300 ease-in-out" style="max-height:0px;">
-                    <p class="text-slate-600 text-sm pt-3 mb-3">
-                        Accedemos a tu equipo de forma rápida y segura usando AnyDesk o TeamViewer.
-                    </p>
-                    <div class="flex gap-3">
-                        <a href="https://download.anydesk.com/AnyDesk.exe" class="text-primary-600 text-sm font-semibold hover:underline">AnyDesk</a>
-                        <a href="https://download.teamviewer.com/download/TeamViewer_Setup.exe" class="text-primary-600 text-sm font-semibold hover:underline">TeamViewer</a>
-                    </div>
-                </div>
-            </div>
- 
         </div>
+
+    </div>
+</section>
+
     </section>
  
     <!-- NOSOTROS -->
-    <section id="nosotros" class="relative py-24 px-6 bg-white/95">
-        <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-            <div data-aos="fade-right">
-                <span class="text-primary-600 font-semibold text-sm uppercase tracking-wide">Nosotros</span>
-                <h2 class="font-display text-3xl md:text-4xl font-bold mt-2 mb-6">Un equipo con experiencia y cercanía</h2>
-                <p class="text-slate-600 leading-relaxed">
-                    Enfocados en resolver tus problemas informáticos, nace PCLyN: un equipo
-                    de trabajo que combina 35 años de experiencia en el área de la informática
-                    junto al entusiasmo e innovación de una nueva generación.
-                </p>
-            </div>
-            <div data-aos="fade-left" class="rounded-2xl overflow-hidden shadow-xl">
-                <img src="/equipo.jpeg" alt="Equipo PCLyN" class="w-full h-full object-cover" />
-            </div>
+<section id="nosotros" class="relative py-24 px-6 text-white">
+    <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+        <div data-aos="fade-right">
+            <span class="text-primary-300 font-semibold text-sm uppercase tracking-wide">Nosotros</span>
+            <h2 class="font-display text-3xl md:text-4xl font-bold mt-2 mb-6">Un equipo con experiencia y cercanía</h2>
+            <p class="text-slate-300 leading-relaxed">
+                Enfocados en resolver tus problemas informáticos, nace PCLyN: un equipo
+                de trabajo que combina 35 años de experiencia en el área de la informática
+                junto al entusiasmo e innovación de una nueva generación.
+            </p>
         </div>
-    </section>
+        <div data-aos="fade-left" class="rounded-2xl overflow-hidden shadow-xl border border-white/10">
+            <img src="/equipo.jpeg" alt="Equipo PCLyN" class="w-full h-full object-cover" />
+        </div>
+    </div>
+</section>
 
     <!-- CONTACTO -->
-    <section id="contacto" class="py-24 px-6 bg-dark text-white">
+    <section id="contacto" class="relative py-24 px-6 text-white">
         <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-start">
             <div data-aos="fade-right">
                 <span class="text-primary-400 font-semibold text-sm uppercase tracking-wide">Contacto</span>
@@ -219,9 +279,9 @@
     </section>
  
     <!-- FOOTER -->
-    <footer class="bg-black text-slate-400 text-sm py-8 px-6 text-center">
-        <p>© 2026 PCLyN · Todos los derechos reservados</p>
-    </footer>
+    <footer class="relative py-8 px-6 text-center text-slate-300">
+    <p>© 2026 PCLyN · Todos los derechos reservados</p>
+</footer>
  
 </body>
 </html>
