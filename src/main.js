@@ -14,6 +14,11 @@ function initQuotePanel() {
   const form = document.getElementById('quote-form');
   const submitBtn = document.getElementById('quote-submit');
   const status = document.getElementById('quote-status');
+  
+  tab.addEventListener('click', openPanel);
+  closeBtn.addEventListener('click', closePanel);
+  overlay.addEventListener('click', closePanel);
+  document.getElementById('quote-close-bottom').addEventListener('click', closePanel);
 
   function openPanel() {
     panel.classList.remove('translate-x-full');
